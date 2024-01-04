@@ -1,0 +1,31 @@
+- name: Add PHP PPA
+  shell: add-apt-repository ppa:ondrej/php
+  tags:
+    - php
+    - install
+
+- name: Install PHP
+  apt:
+    name: "php{{ php_version }}"
+    state: present
+  tags:
+    - php
+    - install
+
+- name: Install PHP
+  apt:
+    name: "php{{ php_version }}-{{ item }}"
+    state: present
+  loop:
+    - mysql
+    - zip
+    - gd
+    - mbstring
+    - curl
+    - xml
+    - bcmath
+    - pgsql
+    - soap
+  tags:
+    - php
+    - install

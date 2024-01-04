@@ -1,0 +1,24 @@
+- name: Install Node.js and npm
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - nodejs
+    - npm
+  tags:
+    - node
+    - install
+
+- name: Install n (Node.js version manager)
+  npm:
+    name: n
+    global: yes
+  tags:
+    - node
+    - install
+
+- name: Install LTS version of Node.js using n
+  command: n lts
+  tags:
+    - node
+    - install
