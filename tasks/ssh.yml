@@ -32,3 +32,7 @@
     key: "{{ lookup('file', pub_key) }}"
   with_fileglob:
   - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
+  tags:
+    - dotfiles
+    - install
+    - ssh
