@@ -1,0 +1,31 @@
+- name: install composer
+  become: true
+  shell: "{{ item }}"
+  with_items:
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php -r "if (hash_file('sha384', 'composer-setup.php') === 'e21205b207c3ff031906575712edab6f13eb0b361f2085f1f1237b7126d785e826a450292b6cfd1d64d92e6563bbde02') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+    - mv composer.phar /usr/local/bin/composer
+  tags:
+    - install
+    - php
+
+- name: Install composer
+  become: true
+  composer:
+    command: require
+    arguments: laravel/installer
+    global_command: true
+  tags:
+    - install
+    - php
+
+- name: Add composer packages to PATH in case dotfiles not installed
+  shell: "{{ item }}"
+  with_items:
+    - PATH=$HOME/.config/composer/vendor/bin:$PATH
+    - export PATH=$HOME/.config/composer/vendor/bin:$PATH
+  tags:
+    - install
+    - php

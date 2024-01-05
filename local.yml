@@ -23,6 +23,7 @@
     - import_tasks: tasks/node-setup.yml
     - import_tasks: tasks/npm-packages.yml
     - import_tasks: tasks/php-setup.yml
+    - import_tasks: tasks/php-packages.yml
     - import_tasks: tasks/zsh-setup.yml
     - import_tasks: tasks/nvim-setup.yml
     - import_tasks: tasks/dotfiles.yml

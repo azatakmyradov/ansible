@@ -12,7 +12,7 @@
     - php
     - install
 
-- name: Install PHP
+- name: Install PHP Extensions
   apt:
     name: "php{{ php_version }}-{{ item }}"
     state: present
