@@ -4,7 +4,7 @@
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
     pub_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
     personal: "{{ lookup('env', 'HOME') }}/personal"
-    user: "root"
+    user: "azatakmyradov"
     php_version: 8.3
   pre_tasks:
   - name: Update Apt

@@ -1,10 +1,12 @@
 - name: Add PHP PPA
+  become: true
   shell: add-apt-repository ppa:ondrej/php
   tags:
     - php
     - install
 
 - name: Install PHP
+  become: true
   apt:
     name: "php{{ php_version }}"
     state: present
@@ -13,6 +15,7 @@
     - install
 
 - name: Install PHP Extensions
+  become: true
   apt:
     name: "php{{ php_version }}-{{ item }}"
     state: present

@@ -8,18 +8,7 @@
     - install
     - productivity
 
-- name: shutter ppa (ppa:linuxuprising/shutter)
-  become: true
-  apt_repository:
-   repo: ppa:linuxuprising/shutter
-   state: present
-   update_cache: True
-  tags:
-    - install
-    - productivity
-
 - name: Install brew
-  become: true
   shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   tags:
     - install
