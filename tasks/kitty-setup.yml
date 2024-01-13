@@ -1,0 +1,27 @@
+- name: Remove kitty
+  become: true
+  file:
+    path: ~/.local/kitty.app
+    state: absent
+  tags:
+    - kitty
+
+- name: Install kitty
+  args:
+    warn: false
+  shell: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+  tags:
+    - kitty
+
+- name: Create a Symlink
+  shell: "{{ item }}"
+  args:
+    warn: false
+  with_items:
+    - "ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/"
+    - "cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/"
+    - "cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/"
+    - sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+    - sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+  tags:
+    - kitty
