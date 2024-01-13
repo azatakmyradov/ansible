@@ -7,16 +7,12 @@
     - kitty
 
 - name: Install kitty
-  args:
-    warn: false
   shell: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
   tags:
     - kitty
 
 - name: Create a Symlink
   shell: "{{ item }}"
-  args:
-    warn: false
   with_items:
     - "ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/"
     - "cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/"

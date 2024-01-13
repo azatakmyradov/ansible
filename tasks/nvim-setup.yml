@@ -1,8 +1,8 @@
 - name: Remove neovim
   file:
     path: ~/neovim
-    absent: true
-    
+    state: absent
+
   tags:
     - install
     - neovim
