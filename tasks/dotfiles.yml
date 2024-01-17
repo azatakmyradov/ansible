@@ -2,6 +2,7 @@
   become: true
   apt: name=stow
   tags:
+    - server
     - install
     - dotfiles
     - stow
@@ -15,6 +16,7 @@
     accept_hostkey: yes
     version: main
   tags:
+    - server
     - install
     - dotfiles
     - stow
@@ -25,6 +27,7 @@
     state: directory
     mode: 0755
   tags:
+    - server
     - install
     - dotfiles
     - stow
@@ -32,6 +35,7 @@
 - name: Stow dotfiles
   shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./install"
   tags:
+    - server
     - install
     - dotfiles
     - stow

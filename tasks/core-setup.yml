@@ -3,6 +3,7 @@
   apt:
     name: ["build-essential", "cmake", "pkg-config", "libpthread-stubs0-dev"]
   tags:
+    - server
     - install
     - neovim
     - core
@@ -12,6 +13,7 @@
   apt:
     name: [ "lua5.1", "unzip", "libtool", "libtool-bin", "gettext", "fzf"]
   tags:
+    - server
     - install
     - neovim
     - core
@@ -21,6 +23,5 @@
   apt:
     name: ["curl", "htop", "lsof", "ccache", "ninja-build", "python3-pip", "dconf-editor", "nvidia-settings", "pavucontrol", "moreutils", "clangd", "ubuntu-mate-desktop" ]
   tags:
-    - restcore
     - install
     - core

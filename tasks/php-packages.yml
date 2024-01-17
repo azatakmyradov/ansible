@@ -8,5 +8,6 @@
     - php -r "unlink('composer-setup.php');"
     - mv composer.phar /usr/local/bin/composer
   tags:
+    - server
     - install
     - php

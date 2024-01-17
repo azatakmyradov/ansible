@@ -10,5 +10,6 @@
     - typescript
     - ts-node
   tags:
+    - server
     - install
     - node

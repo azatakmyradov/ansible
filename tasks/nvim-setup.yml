@@ -4,6 +4,7 @@
     state: absent
 
   tags:
+    - server
     - install
     - neovim
 
@@ -12,12 +13,14 @@
     repo: 'https://github.com/neovim/neovim.git'
     dest: "{{ lookup('env', 'HOME') }}/neovim"
   tags:
+    - server
     - install
     - neovim
 
 - name: Build neovim
   shell: "cd {{ lookup('env', 'HOME') }}/neovim && make -j 20"
   tags:
+    - server
     - install
     - neovim
 
@@ -25,5 +28,6 @@
   become: true
   shell: "cd {{ lookup('env', 'HOME') }}/neovim && make install"
   tags:
+    - server
     - install
     - neovim

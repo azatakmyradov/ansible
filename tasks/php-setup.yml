@@ -2,6 +2,7 @@
   become: true
   shell: add-apt-repository ppa:ondrej/php -y
   tags:
+    - server
     - php
     - install
 
@@ -11,6 +12,7 @@
     name: "php{{ php_version }}"
     state: present
   tags:
+    - server
     - php
     - install
 
@@ -30,5 +32,6 @@
     - pgsql
     - soap
   tags:
+    - server
     - php
     - install

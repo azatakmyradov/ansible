@@ -5,13 +5,17 @@
     value: "azat@akmyradov.me"
   tags:
   - git-personal
+  - server
+
 - name: Git personal setup name
   git_config:
     name: user.name
     scope: global
     value: "Azat Akmyradov"
   tags:
+  - server
   - git-personal
+
 - name: Git Rebdev
   git_config:
     name: user.email
@@ -19,3 +23,4 @@
     value: "azat@rebdev.com"
   tags:
   - git-rebdev
+  - server
