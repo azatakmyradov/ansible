@@ -14,6 +14,36 @@
     - install
     - productivity
 
+- name: Table Plus
+  become: true
+  shell: "{{ item }}"
+  with_items:
+    - wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
+  tags:
+    - tableplus
+    - install
+    - productivity
+
+- name: Add specified repository into sources list
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main
+    state: present
+  tags:
+    - tableplus
+    - install
+    - productivity
+
+- name: Install Table Plus
+  become: true
+  apt:
+    name: tableplus
+    update_cache: true
+  tags:
+    - tableplus
+    - install
+    - productivity
+
 - name: Install packages
   become: true
   apt:
