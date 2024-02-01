@@ -6,6 +6,11 @@
     - php
     - install
 
+- name: Update apt packages
+  become: true
+  apt:
+    update_cache: yes
+
 - name: Install PHP
   become: true
   apt:
