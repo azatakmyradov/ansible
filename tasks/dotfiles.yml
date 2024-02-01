@@ -33,7 +33,7 @@
     - stow
 
 - name: Stow dotfiles
-  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./install"
+  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./ubuntu"
   tags:
     - server
     - install
