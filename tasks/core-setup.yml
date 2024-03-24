@@ -1,12 +1,24 @@
-- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread)
+- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread, freetype, fontconfig, xcb, xkbcommon, python3)
   become: true
+  with_items:
+    - build-essential
+    - cmake
+    - pkg-config
+    - libpthread-stubs0-dev
+    - pkg-config
+    - libfreetype6-dev
+    - libfontconfig1-dev
+    - libxcb-xfixes0-dev
+    - libxkbcommon-dev
+    - python3
   apt:
-    name: ["build-essential", "cmake", "pkg-config", "libpthread-stubs0-dev"]
+    name: "{{ item }}"
   tags:
     - server
     - install
     - neovim
     - core
+    - alacritty
 
 - name: Install System Packages 2 (lua, unzip, libtool, libtool-bin, gettext, fzf, wget)
   become: true
@@ -25,3 +37,12 @@
   tags:
     - install
     - core
+
+- name: Install Rust
+  become: true
+  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  tags:
+    - install
+    - rust
+    - core
+    - alacritty
