@@ -4,8 +4,7 @@
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
     pub_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
     personal: "{{ lookup('env', 'HOME') }}/personal"
-    user: "azatakmyradov"
-    php_version: 8.3
+    user: "{{ lookup('env', 'USER') }}"
   pre_tasks:
   - name: Update Apt
     become: true
@@ -22,10 +21,7 @@
     - import_tasks: tasks/core-setup.yml
     - import_tasks: tasks/node-setup.yml
     - import_tasks: tasks/npm-packages.yml
-    - import_tasks: tasks/php-setup.yml
-    - import_tasks: tasks/php-packages.yml
     - import_tasks: tasks/zsh-setup.yml
     - import_tasks: tasks/nvim-setup.yml
     - import_tasks: tasks/dotfiles.yml
-    - import_tasks: tasks/kitty-setup.yml
     - import_tasks: tasks/productivity-tools.yml
