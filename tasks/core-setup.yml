@@ -22,18 +22,39 @@
 
 - name: Install System Packages 2 (lua, unzip, libtool, libtool-bin, gettext, fzf, wget)
   become: true
+  with_items:
+      - lua5.1
+      - unzip
+      - libtool
+      - libtool-bin
+      - gettext
+      - fzf
+      - wget
   apt:
-    name: [ "lua5.1", "unzip", "libtool", "libtool-bin", "gettext", "fzf", "wget"]
+    name: "{{ item }}"
   tags:
     - server
     - install
     - neovim
     - core
+    - bun
 
 - name: Install System Packages 3 (the rest)
   become: true
+  with_items:
+    - curl
+    - htop
+    - lsof
+    - ccache
+    - ninja-build
+    - python3-pip
+    - dconf-editor
+    - nvidia-settings
+    - pavucontrol
+    - moreutils
+    - clangd
   apt:
-    name: ["curl", "htop", "lsof", "ccache", "ninja-build", "python3-pip", "dconf-editor", "nvidia-settings", "pavucontrol", "moreutils", "clangd"]
+    name: "{{ item }}"
   tags:
     - install
     - core

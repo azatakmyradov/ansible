@@ -4,7 +4,6 @@
     name: "{{ item }}"
     global: yes
   loop:
-    - yarn
     - eslint
     - typescript-language-server
     - typescript

@@ -32,6 +32,21 @@
     - dotfiles
     - stow
 
+- name: Clone neovim config
+  ansible.builtin.git:
+    repo: 'git@github.com:azatakmyradov/init.lua'
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: main
+  tags:
+    - server
+    - install
+    - dotfiles
+    - neovim
+    - stow
+
 - name: Stow dotfiles
   shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./ubuntu"
   tags:

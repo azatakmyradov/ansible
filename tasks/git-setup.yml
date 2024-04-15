@@ -15,12 +15,3 @@
   tags:
   - server
   - git-personal
-
-- name: Git Rebdev
-  git_config:
-    name: user.email
-    scope: global
-    value: "azat@rebdev.com"
-  tags:
-  - git-rebdev
-  - server
