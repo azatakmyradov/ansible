@@ -1,37 +1,29 @@
-- name: Ensure .ssh directory exists.
+---
+- name: Configure SSH keys and authorized_keys
   ansible.builtin.file:
     dest: "{{ dest_key | dirname }}"
     mode: '0700'
     state: directory
   tags:
-    - server
-    - dotfiles
-    - install
     - ssh
 
-- name: Install ssh key
+- name: Copy SSH private key to remote host
   ansible.builtin.copy:
     src: "{{ source_key }}"
     dest: "{{ dest_key }}"
     mode: '0600'
   tags:
-    - server
-    - dotfiles
-    - install
     - ssh
 
-- name: Install ssh key public
+- name: Copy SSH public key to remote host
   ansible.builtin.copy:
     src: "{{ source_key }}.pub"
     dest: "{{ dest_key }}.pub"
     mode: '0644'
   tags:
-    - server
-    - dotfiles
-    - install
     - ssh
 
-- name: Set authorized key took from file
+- name: Add public keys to authorized_keys file
   authorized_key:
     user: "{{ user }}"
     state: present
@@ -39,7 +31,4 @@
   with_fileglob:
     - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
   tags:
-    - server
-    - dotfiles
-    - install
     - ssh

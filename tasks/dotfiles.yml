@@ -1,15 +1,12 @@
-- name: Installing stow
+- name: Install Stow package
   become: true
   ansible.builtin.pacman:
     name: 'stow'
     state: present
   tags:
-    - server
-    - install
     - dotfiles
-    - stow
 
-- name: Cloning dotfiles
+- name: Clone dotfiles repository
   ansible.builtin.git:
     repo: 'https://github.com/azatakmyradov/.dotfiles.git'
     dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
@@ -17,41 +14,52 @@
     update: true
     version: main
   tags:
-    - server
-    - install
     - dotfiles
-    - stow
 
-- name: Create directory if not exists
+- name: Create .config directory if it does not exist
   ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/.config"
     state: directory
     mode: '0755'
   tags:
-    - server
-    - install
     - dotfiles
-    - stow
 
-- name: Clone neovim config
+- name: Create personal workspaces
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ lookup('env', 'HOME') }}/personal"
+    - "{{ lookup('env', 'HOME') }}/work"
+    - "{{ lookup('env', 'HOME') }}/plugins"
+  tags:
+    - dotfiles
+
+- name: Clone Neovim configuration repository
   ansible.builtin.git:
     repo: 'https://github.com/azatakmyradov/kickstart.nvim'
-    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    dest: "{{ lookup('env', 'HOME') }}/personal/kickstart.nvim"
     recursive: true
     update: true
     version: main
   tags:
-    - server
-    - install
     - dotfiles
     - neovim
-    - stow
+
+- name: Create symlink for Neovim configuration
+  ansible.builtin.file:
+    src: "{{ lookup('env', 'HOME') }}/personal/kickstart.nvim"
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    state: link
+  tags:
+    - dotfiles
+    - neovim
 
 - name: Stow dotfiles
   ansible.builtin.shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./install"
   changed_when: false
   tags:
-    - server
-    - install
     - dotfiles
-    - stow

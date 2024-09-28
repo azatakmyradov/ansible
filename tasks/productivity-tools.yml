@@ -1,14 +1,3 @@
-- name: Table Plus
-  become: true
-  ansible.builtin.git:
-    repo: https://aur.archlinux.org/tableplus.git
-    dest: "{{ lookup('env', 'HOME') }}/src/tableplus"
-    version: master
-  tags:
-    - tableplus
-    - install
-    - productivity
-
 - name: Install packages
   become: true
   ansible.builtin.pacman:
@@ -20,5 +9,23 @@
       - "ripgrep"
       - "i3"
   tags:
-    - install
+    - productivity
+
+- name: Create folders to store sources
+  ansible.builtin.file:
+    path: "{{ home }}/src"
+    state: directory
+    mode: '0755'
+  tags:
+    - sources
+
+- name: Table Plus
+  ansible.builtin.git:
+    repo: https://aur.archlinux.org/{{ item }}.git
+    dest: "{{ home }}/src/{{ item }}"
+    version: master
+  loop:
+    - tableplus
+  tags:
+    - tableplus
     - productivity

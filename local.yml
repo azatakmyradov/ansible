@@ -1,17 +1,30 @@
-- hosts: localhost
+- name: Setting up Arch Linux Environment
+  hosts: localhost
   vars:
     source_key: "./.ssh/id_rsa"
     dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
     pub_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
-    personal: "{{ lookup('env', 'HOME') }}/personal"
     user: "{{ lookup('env', 'USER') }}"
+    home: "{{ lookup('env', 'HOME') }}"
   tasks:
-    - import_tasks: tasks/ssh.yml
-    - import_tasks: tasks/git-setup.yml
-    - import_tasks: tasks/core-setup.yml
-    - import_tasks: tasks/node-setup.yml
-    - import_tasks: tasks/npm-packages.yml
-    - import_tasks: tasks/zsh-setup.yml
-    - import_tasks: tasks/dotfiles.yml
-    - import_tasks: tasks/productivity-tools.yml
-
+    - name: Load SSH Configuration Tasks
+      ansible.builtin.import_tasks:
+        file: tasks/ssh.yml
+    - name: Configuring Git
+      ansible.builtin.import_tasks:
+        file: tasks/git-setup.yml
+    - name: Configuring Git
+      ansible.builtin.import_tasks:
+        file: tasks/core-setup.yml
+    - name: Configuring NodeJS
+      ansible.builtin.import_tasks:
+        file: tasks/node-setup.yml
+    - name: Configuring ZSH
+      ansible.builtin.import_tasks:
+        file: tasks/zsh-setup.yml
+    - name: Configuring Dotfiles
+      ansible.builtin.import_tasks:
+        file: tasks/dotfiles.yml
+    - name: Additional Productivity Tools
+      ansible.builtin.import_tasks:
+        file: tasks/productivity-tools.yml

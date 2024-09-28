@@ -1,52 +1,46 @@
-- name: Install System Packages 1
+# Block 1: Development Tools
+- name: Install development tools (cmake, pkg-config, python3, lua, libtool, rust, go, ccache)
   become: true
-  with_items:
-    - cmake
-    - pkg-config
-    - python3
   ansible.builtin.pacman:
-    name: "{{ item }}"
+    name:
+      - cmake
+      - pkg-config
+      - python3
+      - lua
+      - libtool
+      - rust
+      - go
+      - ccache
     state: present
   tags:
-    - server
-    - install
-    - neovim
     - core
-    - alacritty
+    - dev-tools
 
-- name: Install System Packages 2
+# Block 2: Utilities
+- name: Install general utilities (unzip, wget, curl, htop, lsof, fzf, moreutils, jq, tldr)
   become: true
-  with_items:
-    - lua
-    - unzip
-    - libtool
-    - gettext
-    - fzf
-    - wget
   ansible.builtin.pacman:
-    name: "{{ item }}"
+    name:
+      - unzip
+      - wget
+      - curl
+      - htop
+      - lsof
+      - fzf
+      - moreutils
+      - jq
+      - tldr
     state: present
   tags:
-    - server
-    - install
-    - neovim
     - core
-    - bun
+    - utilities
 
-- name: Install System Packages 3
+# Block 3: Neovim
+- name: Install Neovim
   become: true
-  with_items:
-    - curl
-    - htop
-    - lsof
-    - ccache
-    - moreutils
-    - rust
-    - go
-    - neovim
   ansible.builtin.pacman:
-    name: "{{ item }}"
+    name: neovim
     state: present
   tags:
-    - install
     - core
+    - editor

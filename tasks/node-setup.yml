@@ -1,4 +1,5 @@
-- name: Install Node.js and npm
+# Block 1: Node.js and npm Installation
+- name: Ensure Node.js and npm are installed
   become: true
   ansible.builtin.pacman:
     name: "{{ item }}"
@@ -7,6 +8,18 @@
     - nodejs
     - npm
   tags:
-    - server
     - node
-    - install
+
+# Block 2: Global npm Packages Installation
+- name: Install global npm packages
+  become: true
+  ansible.builtin.npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - eslint
+    - typescript
+    - typescript-language-server
+    - ts-node
+  tags:
+    - node

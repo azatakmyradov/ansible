@@ -1,26 +1,30 @@
-- name: Install ZSH
+- name: Ensure ZSH shell is installed
   become: true
   ansible.builtin.pacman:
     name: 'zsh'
     state: present
-  tags: &tags_for_zsh_tasks ['install', 'productivity', 'dotfiles', 'zsh', 'server']
+  tags:
+    - shell
 
-- name: Change shell to zsh
+- name: Change default shell to ZSH for the current user
   changed_when: false
   become: true
   ansible.builtin.shell: chsh -s $(which zsh)
-  tags: *tags_for_zsh_tasks
+  tags:
+    - shell
 
-- name: Install Starship
+- name: Install Starship prompt
   ansible.builtin.shell: |
     set -o pipefail
     curl -sS https://starship.rs/install.sh | sh -s -- -y
   changed_when: false
-  tags: *tags_for_zsh_tasks
+  tags:
+    - shell
 
-- name: Install zsh-autosuggestions
+- name: Clone zsh-autosuggestions plugin from GitHub
   ansible.builtin.git:
     repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
     dest: "~/.zsh/zsh-autosuggestions"
     version: master
-  tags: *tags_for_zsh_tasks
+  tags:
+    - shell
