@@ -1,5 +1,4 @@
 - name: Install packages
-  become: true
   ansible.builtin.pacman:
     name:
       - "tmux"
@@ -19,13 +18,13 @@
   tags:
     - sources
 
-- name: Table Plus
+- name: Get application sources
   ansible.builtin.git:
     repo: https://aur.archlinux.org/{{ item }}.git
     dest: "{{ home }}/src/{{ item }}"
     version: master
   loop:
     - tableplus
+    - google-chrome
   tags:
-    - tableplus
     - productivity

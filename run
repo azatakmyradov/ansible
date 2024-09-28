@@ -1,3 +1,6 @@
 #!/bin/bash
 
 USER=$(whoami) ansible-playbook local.yml --ask-vault-pass
+
+cd ~/src/google-chrome && makepkg -si
+cd ~/src/tableplus && makepkg -si

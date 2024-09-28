@@ -52,7 +52,7 @@
     src: "{{ lookup('env', 'HOME') }}/personal/kickstart.nvim"
     dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
     owner: "{{ user }}"
-    group: "{{ group }}"
+    group: "{{ user }}"
     state: link
   tags:
     - dotfiles

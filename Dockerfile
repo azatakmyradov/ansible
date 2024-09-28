@@ -1,4 +1,4 @@
-FROM ogarcia/archlinux:devel
+FROM archlinux:latest
 
 ARG TAGS
 
