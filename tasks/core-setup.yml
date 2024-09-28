@@ -1,18 +1,12 @@
-- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread, freetype, fontconfig, xcb, xkbcommon, python3)
+- name: Install System Packages 1
   become: true
   with_items:
-    - build-essential
     - cmake
     - pkg-config
-    - libpthread-stubs0-dev
-    - pkg-config
-    - libfreetype6-dev
-    - libfontconfig1-dev
-    - libxcb-xfixes0-dev
-    - libxkbcommon-dev
     - python3
-  apt:
+  ansible.builtin.pacman:
     name: "{{ item }}"
+    state: present
   tags:
     - server
     - install
@@ -20,18 +14,18 @@
     - core
     - alacritty
 
-- name: Install System Packages 2 (lua, unzip, libtool, libtool-bin, gettext, fzf, wget)
+- name: Install System Packages 2
   become: true
   with_items:
-      - lua5.1
-      - unzip
-      - libtool
-      - libtool-bin
-      - gettext
-      - fzf
-      - wget
-  apt:
+    - lua
+    - unzip
+    - libtool
+    - gettext
+    - fzf
+    - wget
+  ansible.builtin.pacman:
     name: "{{ item }}"
+    state: present
   tags:
     - server
     - install
@@ -39,31 +33,20 @@
     - core
     - bun
 
-- name: Install System Packages 3 (the rest)
+- name: Install System Packages 3
   become: true
   with_items:
     - curl
     - htop
     - lsof
     - ccache
-    - ninja-build
-    - python3-pip
-    - dconf-editor
-    - nvidia-settings
-    - pavucontrol
     - moreutils
-    - clangd
-  apt:
-    name: "{{ item }}"
-  tags:
-    - install
-    - core
-
-- name: Install Rust
-  become: true
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  tags:
-    - install
     - rust
+    - go
+    - neovim
+  ansible.builtin.pacman:
+    name: "{{ item }}"
+    state: present
+  tags:
+    - install
     - core
-    - alacritty

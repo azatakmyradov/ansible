@@ -1,28 +1,9 @@
 - name: Table Plus
   become: true
-  shell: "{{ item }}"
-  with_items:
-    - wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
-  tags:
-    - tableplus
-    - install
-    - productivity
-
-- name: Add specified repository into sources list
-  become: true
-  ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main
-    state: present
-  tags:
-    - tableplus
-    - install
-    - productivity
-
-- name: Install Table Plus
-  become: true
-  apt:
-    name: tableplus
-    update_cache: true
+  ansible.builtin.git:
+    repo: https://aur.archlinux.org/tableplus.git
+    dest: "{{ lookup('env', 'HOME') }}/src/tableplus"
+    version: master
   tags:
     - tableplus
     - install
@@ -30,8 +11,14 @@
 
 - name: Install packages
   become: true
-  apt:
-    name: [ "tmux", "wireshark", "fzf", "kdenlive", "gimp", "xclip", "screenkey", "tldr", "ripgrep", "shutter", "i3" ]
+  ansible.builtin.pacman:
+    name:
+      - "tmux"
+      - "fzf"
+      - "xclip"
+      - "tldr"
+      - "ripgrep"
+      - "i3"
   tags:
     - install
     - productivity

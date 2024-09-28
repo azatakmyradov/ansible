@@ -1,8 +1,8 @@
 - name: Install Yarn
   become: true
-  npm:
+  ansible.builtin.npm:
     name: "{{ item }}"
-    global: yes
+    global: true
   loop:
     - eslint
     - typescript-language-server

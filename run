@@ -1,0 +1,3 @@
+#!/bin/bash
+
+USER=$(whoami) ansible-playbook local.yml --ask-vault-pass

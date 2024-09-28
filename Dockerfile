@@ -1,7 +1,10 @@
-FROM ubuntu:22.04
+FROM ogarcia/archlinux:devel
+
 ARG TAGS
+
+# Update package database and install all packages in one layer
+RUN pacman -Syu --noconfirm neovim ansible curl git wget base-devel
+
 WORKDIR /usr/local/bin
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt install -y software-properties-common && apt-add-repository -y ppa:ansible/ansible && apt-add-repository -y ppa:neovim-ppa/unstable && apt update && apt install -y curl git wget ansible build-essential neovim
 
 COPY . .

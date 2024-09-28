@@ -5,16 +5,6 @@
     pub_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
     personal: "{{ lookup('env', 'HOME') }}/personal"
     user: "{{ lookup('env', 'USER') }}"
-  pre_tasks:
-  - name: Update Apt
-    become: true
-    apt:
-      force_apt_get: true
-      update_cache: true
-      state: present
-    tags:
-      - install
-      - core
   tasks:
     - import_tasks: tasks/ssh.yml
     - import_tasks: tasks/git-setup.yml
@@ -22,8 +12,6 @@
     - import_tasks: tasks/node-setup.yml
     - import_tasks: tasks/npm-packages.yml
     - import_tasks: tasks/zsh-setup.yml
-    # - import_tasks: tasks/nvim-setup.yml
     - import_tasks: tasks/dotfiles.yml
     - import_tasks: tasks/productivity-tools.yml
-    - import_tasks: tasks/alacritty-setup.yml
 

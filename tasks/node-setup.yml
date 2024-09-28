@@ -1,6 +1,6 @@
 - name: Install Node.js and npm
   become: true
-  apt:
+  ansible.builtin.pacman:
     name: "{{ item }}"
     state: present
   loop:
@@ -9,31 +9,4 @@
   tags:
     - server
     - node
-    - install
-
-- name: Install n (Node.js version manager)
-  become: true
-  npm:
-    name: n
-    global: yes
-  tags:
-    - server
-    - node
-    - install
-
-- name: Install LTS version of Node.js using n
-  become: true
-  command: n lts
-  tags:
-    - server
-    - node
-    - install
-
-- name: Bun Install
-  become: true
-  shell: curl -fsSL https://bun.sh/install | bash
-  tags:
-    - server
-    - node
-    - bun
     - install

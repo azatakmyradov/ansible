@@ -1,6 +1,8 @@
 - name: Installing stow
   become: true
-  apt: name=stow
+  ansible.builtin.pacman:
+    name: 'stow'
+    state: present
   tags:
     - server
     - install
@@ -9,11 +11,10 @@
 
 - name: Cloning dotfiles
   ansible.builtin.git:
-    repo: 'git@github.com:azatakmyradov/.dotfiles.git'
+    repo: 'https://github.com/azatakmyradov/.dotfiles.git'
     dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
-    recursive: yes
-    update: yes
-    accept_hostkey: yes
+    recursive: true
+    update: true
     version: main
   tags:
     - server
@@ -22,10 +23,10 @@
     - stow
 
 - name: Create directory if not exists
-  file:
+  ansible.builtin.file:
     path: "{{ lookup('env', 'HOME') }}/.config"
     state: directory
-    mode: 0755
+    mode: '0755'
   tags:
     - server
     - install
@@ -34,11 +35,10 @@
 
 - name: Clone neovim config
   ansible.builtin.git:
-    repo: 'git@github.com:azatakmyradov/init.lua'
+    repo: 'https://github.com/azatakmyradov/kickstart.nvim'
     dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
-    recursive: yes
-    update: yes
-    accept_hostkey: yes
+    recursive: true
+    update: true
     version: main
   tags:
     - server
@@ -48,7 +48,8 @@
     - stow
 
 - name: Stow dotfiles
-  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./ubuntu"
+  ansible.builtin.shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./install"
+  changed_when: false
   tags:
     - server
     - install

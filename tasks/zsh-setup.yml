@@ -1,20 +1,26 @@
 - name: Install ZSH
   become: true
-  apt: name=zsh
-  tags: &tags_for_zsh_tasks [ 'install', 'productivity', 'dotfiles', 'zsh', 'server' ]
+  ansible.builtin.pacman:
+    name: 'zsh'
+    state: present
+  tags: &tags_for_zsh_tasks ['install', 'productivity', 'dotfiles', 'zsh', 'server']
 
 - name: Change shell to zsh
+  changed_when: false
   become: true
-  shell: chsh -s $(which zsh)
+  ansible.builtin.shell: chsh -s $(which zsh)
   tags: *tags_for_zsh_tasks
 
 - name: Install Starship
-  shell: curl -sS https://starship.rs/install.sh | sh -s -- -y
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+  changed_when: false
   tags: *tags_for_zsh_tasks
-  become_user: "{{ user }}"
 
 - name: Install zsh-autosuggestions
   ansible.builtin.git:
     repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
     dest: "~/.zsh/zsh-autosuggestions"
+    version: master
   tags: *tags_for_zsh_tasks
