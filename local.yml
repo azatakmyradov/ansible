@@ -1,8 +1,11 @@
 - hosts: localhost
   vars:
-    source_key: "./.ssh/id_rsa"
-    dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
-    pub_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+    ssh_dir: "{{ lookup('env', 'HOME') }}/.ssh"
+    ssh_keys:
+      - source: "./.ssh/id_rsa"
+        name: "id_rsa"
+      - source: "./.ssh/id_rkl"
+        name: "id_rkl"
     personal: "{{ lookup('env', 'HOME') }}/personal"
     user: "{{ lookup('env', 'USER') }}"
   pre_tasks:
@@ -26,4 +29,3 @@
     - import_tasks: tasks/dotfiles.yml
     - import_tasks: tasks/productivity-tools.yml
     - import_tasks: tasks/alacritty-setup.yml
-

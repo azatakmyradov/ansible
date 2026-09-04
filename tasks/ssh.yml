@@ -1,7 +1,7 @@
 - name: Ensure .ssh directory exists.
   file:
-    dest: "{{ dest_key | dirname }}"
-    mode: 0700
+    dest: "{{ ssh_dir }}"
+    mode: "0700"
     state: directory
   tags:
     - server
@@ -9,35 +9,42 @@
     - install
     - ssh
 
-- name: Install ssh key
+- name: Install ssh keys
   copy:
-    src: "{{ source_key }}"
-    dest: "{{ dest_key }}"
-    mode: 0600
+    src: "{{ item.source }}"
+    dest: "{{ ssh_dir }}/{{ item.name }}"
+    mode: "0600"
+  loop: "{{ ssh_keys }}"
+  loop_control:
+    label: "{{ item.name }}"
   tags:
     - server
     - dotfiles
     - install
     - ssh
 
-- name: Install ssh key public
+- name: Install ssh public keys
   copy:
-    src: "{{ source_key }}.pub"
-    dest: "{{ dest_key }}.pub"
-    mode: 0644
+    src: "{{ item.source }}.pub"
+    dest: "{{ ssh_dir }}/{{ item.name }}.pub"
+    mode: "0644"
+  loop: "{{ ssh_keys }}"
+  loop_control:
+    label: "{{ item.name }}"
   tags:
     - server
     - dotfiles
     - install
     - ssh
 
-- name: Set authorized key took from file
+- name: Add SSH public keys to authorized_keys
   authorized_key:
     user: "{{ user }}"
     state: present
-    key: "{{ lookup('file', pub_key) }}"
-  with_fileglob:
-  - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
+    key: "{{ lookup('file', item.source + '.pub') }}"
+  loop: "{{ ssh_keys }}"
+  loop_control:
+    label: "{{ item.name }}"
   tags:
     - server
     - dotfiles
